@@ -40,7 +40,7 @@ class CustomClass
 
 
 
-    static function getClassNameby_typeName($className) {
+    static function getClassBy_typeName($className) {
         $conn = DatabaseConnection::getConnection();
         if ($stmt = $conn->prepare("SELECT id FROM _classes WHERE typeName=?")) {
 
@@ -48,6 +48,7 @@ class CustomClass
             $stmt->execute();
             $stmt->store_result();
             if($stmt->num_rows() <= 0) {  return false;  }
+
 
 
             $databaseID = "";
@@ -63,11 +64,11 @@ class CustomClass
         return false;
     }
 
-    static function getClassVariables() {
+    function getClassVariables() {
         $conn = DatabaseConnection::getConnection();
-        if ($stmt = $conn->prepare("SELECT * FROM _fields")) {
+        if ($stmt = $conn->prepare("SELECT * FROM _fields where id in (select field from _objects_fields where object = ?)")) {
 
-//            $stmt->bind_param("i", $id);
+            $stmt->bind_param("i", $this->getDataBaseID());
             $stmt->execute();
             $stmt->store_result();
             if($stmt->num_rows() <= 0) {  return false;  }
@@ -79,16 +80,12 @@ class CustomClass
             $stmt->bind_result($fieldID,$fieldName,$fieldType);
 
             while ($row = $stmt->fetch()){
-                $data[] = $row;
-                echo $row;
-//                $customClass = new CustomClass($className, $databaseID);
-
+                $className  =$this->getClassName();
+                Debug::d_echo("Fetched variables for <b>$className:</b> &emsp;  fieldID:$fieldID  | $fieldName:$fieldName  | fieldType:$fieldType");
             }
-
             /* close statement */
             $stmt->close();
-
-//            return $customClass;
+            return true;
         }
         return false;
     }

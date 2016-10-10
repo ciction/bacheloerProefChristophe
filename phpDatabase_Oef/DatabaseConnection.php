@@ -22,7 +22,7 @@ class DatabaseConnection{
             if($conn->connect_error){
                 die("Couldn't connect to database: " . $conn->connect_error);
             } else {
-                Debug::d_echo("Connected successfully");
+//                Debug::d_echo("Connected successfully");
                 self::$conn = $conn;
             }
         }

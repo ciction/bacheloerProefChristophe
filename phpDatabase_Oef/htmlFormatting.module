@@ -1,0 +1,40 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Christophe
+ * Date: 10/10/2016
+ * Time: 5:46 PM
+ */
+
+function createHTMLTable($titles, $values2D){
+
+    $dom = new DOMDocument('1.0', 'utf-8');
+    $table = $dom->createElement('table');
+    $table->setAttribute("style","width:100%");
+    $dom->appendChild($table);
+    $tableRow = $dom->createElement('tr');
+
+    foreach ($titles as $title) {
+        $tableHeader = $dom->createElement('th',$title);
+        $tableRow->appendChild($tableHeader);
+    }
+    $table->appendChild($tableRow);
+
+    foreach ($values2D as $valueArr) {
+        $tableRow = $dom->createElement('tr');
+        foreach ($valueArr as $value) {
+            $tableColumn = $dom->createElement('td',$value);
+            $tableRow->appendChild($tableColumn);
+        }
+        $table->appendChild($tableRow);
+    }
+
+    echo $dom->saveXML();
+    return $dom;
+}
+
+
+
+
+
+?>
