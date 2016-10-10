@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="Project.js"></script>
+    <script src="User.js"></script>
+    <script src="Main.js"></script>
+</head>
+<body>
+
+<!--<div ng-app="" ng-init="person={firstName:'John',lastName:'Doe'}">-->
+
+    <!--<p>The name is {{ person.lastName }}</p>-->
+
+<!--</div>-->
+
+<div ng-app="myApp" ng-controller="myCtrl">
+    Name: <input ng-model="name">
+    <br>
+    person: {{ person.lastName}}
+    <br>
+    map: {{myMap["test"]}}
+    <br>
+    map: {{myMap}}
+
+</div>
+
+</body>
+
+
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.name = "John Doe";
+        $scope.person ={firstName:'John',lastName:'Doe'}
+        $scope.myMap = new Map();
+        $scope.myMap["test"] = 5;
+        $scope.myMap["test2"] = 10;
+        console.log($scope.myMap)
+
+    });
+</script>
+
+
+
+</html>
+
+
+
