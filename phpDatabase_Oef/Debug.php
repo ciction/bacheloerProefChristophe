@@ -13,7 +13,7 @@ class Debug
 
     static function d_echo($var){
         if(self::$debugMode){
-            echo $var . '<br>';
+            echo $var;
         }
     }
 }

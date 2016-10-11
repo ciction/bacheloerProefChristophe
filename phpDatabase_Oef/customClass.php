@@ -77,12 +77,18 @@ class CustomClass
             $fieldID = "";
             $fieldName = "";
             $fieldType = "";
+            $rows = [];
+
             $stmt->bind_result($fieldID,$fieldName,$fieldType);
 
-            while ($row = $stmt->fetch()){
-                $className  =$this->getClassName();
-                Debug::d_echo("Fetched variables for <b>$className:</b> &emsp;  fieldID:$fieldID  | $fieldName:$fieldName  | fieldType:$fieldType");
+            while ($rowNr = $stmt->fetch()){
+                HtmlTablePrinter::Instance()->addRow([$fieldID,$fieldName,$fieldType]);
             }
+            $className  =$this->getClassName();
+            HtmlTablePrinter::Instance()->setTableName($this->className);
+            HtmlTablePrinter::Instance()->setTitles(["fieldID", "fieldName", "fieldType"]);
+            HtmlTablePrinter::Instance()->createHTMLTable();
+
             /* close statement */
             $stmt->close();
             return true;
